@@ -30,8 +30,8 @@ public class BeerController {
 
     }
 
-    @GetMapping("upc")
-    public ResponseEntity getBeerByUpc(@PathVariable("upc") Long upc){
+    @GetMapping("/upc/{upcId}")
+    public ResponseEntity getBeerByUpc(@PathVariable("upcId") Long upcId){
         //todo impl
         return new ResponseEntity(BeerDto.builder().build(), HttpStatus.OK);
     }
