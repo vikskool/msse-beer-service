@@ -1,39 +1,51 @@
 package com.springframework.mssebeerservice.web.controller;
 
+import com.springframework.mssebeerservice.services.BeerService;
 import com.springframework.mssebeerservice.web.model.BeerDto;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/beer")
 public class BeerController {
 
-    @GetMapping("/{beerId}")
-    public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID beerId){
-        //todo impl
-        return new ResponseEntity(BeerDto.builder().build(), HttpStatus.OK);
+    private final BeerService beerService;
+
+    public BeerController(BeerService beerService) {
+        this.beerService = beerService;
+    }
+
+    @GetMapping({"/{beerId}"})
+    public ResponseEntity<BeerDto> getBeer(@PathVariable("beerId") UUID beerId){
+
+        return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity createNewBeer(@RequestBody BeerDto beerDto){
-        //todo impl
-        return new ResponseEntity(HttpStatus.CREATED);
+    public ResponseEntity createBeerEntry(@RequestBody BeerDto beerDto){
+        BeerDto savedBeerDto = beerService.createNewBeer(beerDto);
+        HttpHeaders httpHeader = new HttpHeaders();
+        //TODO: add hostname to url
+        httpHeader.add("Location","/api/v1/beer/"+savedBeerDto.getId().toString());
+        return new ResponseEntity(httpHeader, HttpStatus.CREATED);
     }
 
     @PutMapping("/{beerId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    //todo impl
-    public void updateBeerById(@PathVariable("beerId") UUID beerId, @RequestBody BeerDto beerDto){
-
+    public ResponseEntity handleUpdate(@PathVariable("beerId") UUID beerId, @RequestBody BeerDto beerDto){
+        beerService.updateBeer(beerId, beerDto);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/upc/{upcId}")
-    public ResponseEntity getBeerByUpc(@PathVariable("upcId") Long upcId){
-        //todo impl
-        return new ResponseEntity(BeerDto.builder().build(), HttpStatus.OK);
+    @DeleteMapping("/{beerId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBeerById(@PathVariable("beerId") UUID beerId){
+        beerService.deleteBeerById(beerId);
     }
 
 
