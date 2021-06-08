@@ -5,7 +5,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -17,7 +19,7 @@ public class Beer {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name="UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(length = "36", columnDefinition = "varchar", nullable = false,updatable = false)
+    @Column(length = 36, columnDefinition = "varchar", nullable = false,updatable = false)
     private UUID id;
 
     @Version
