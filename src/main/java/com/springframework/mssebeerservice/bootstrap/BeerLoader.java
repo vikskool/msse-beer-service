@@ -1,7 +1,7 @@
 package com.springframework.mssebeerservice.bootstrap;
 
+import com.springframework.mssebeerservice.domain.Beer;
 import com.springframework.mssebeerservice.repositories.BeerRepository;
-import com.springframework.mssebeerservice.web.domain.Beer;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 

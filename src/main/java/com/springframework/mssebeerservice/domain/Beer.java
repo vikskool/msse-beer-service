@@ -1,4 +1,4 @@
-package com.springframework.mssebeerservice.web.domain;
+package com.springframework.mssebeerservice.domain;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

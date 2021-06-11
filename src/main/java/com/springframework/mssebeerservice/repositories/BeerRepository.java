@@ -1,6 +1,6 @@
 package com.springframework.mssebeerservice.repositories;
 
-import com.springframework.mssebeerservice.web.domain.Beer;
+import com.springframework.mssebeerservice.domain.Beer;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
