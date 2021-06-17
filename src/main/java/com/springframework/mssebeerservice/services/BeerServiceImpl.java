@@ -1,6 +1,7 @@
 package com.springframework.mssebeerservice.services;
 
 
+import com.springframework.mssebeerservice.repositories.BeerRepository;
 import com.springframework.mssebeerservice.web.model.BeerDto;
 import com.springframework.mssebeerservice.web.model.BeerStyleEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,13 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class BeerServiceImpl implements BeerService {
+
+    private BeerRepository beerRepository;
+
+    public BeerServiceImpl(BeerRepository beerRepository){
+        this.beerRepository = beerRepository;
+    }
+
     @Override
     public BeerDto getBeerById(UUID beerId) {
         return BeerDto.builder().id(UUID.randomUUID())
@@ -25,9 +33,7 @@ public class BeerServiceImpl implements BeerService {
 
     @Override
     public BeerDto createNewBeer(BeerDto beerDto) {
-        return BeerDto.builder()
-                .id(UUID.randomUUID())
-                .build();
+        return beerRepository.save(beerDto);
     }
 
     @Override
@@ -38,6 +44,15 @@ public class BeerServiceImpl implements BeerService {
     @Override
     public void deleteBeerById(UUID beerId) {
         log.info("Deleting beer with id "+ beerId);
+    }
+
+    @Override
+    public BeerDto getBeerByUpc(Long upc){
+        return BeerDto.builder().id(UUID.randomUUID())
+                .beerName("Galaxy Cat")
+                .beerStyle(BeerStyleEnum.PALE_ALE)
+                .upc(upc)
+                .build();
     }
 
 

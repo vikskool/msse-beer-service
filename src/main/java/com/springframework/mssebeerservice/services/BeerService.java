@@ -1,7 +1,6 @@
 package com.springframework.mssebeerservice.services;
 
 
-
 import com.springframework.mssebeerservice.web.model.BeerDto;
 
 import java.util.UUID;
@@ -17,4 +16,6 @@ public interface BeerService {
     void updateBeer(UUID beerId, BeerDto beerDto);
 
     void deleteBeerById(UUID beerId);
+
+    BeerDto getBeerByUpc(Long upc);
 }

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 public class BeerControllerV2 {
@@ -23,7 +24,7 @@ public class BeerControllerV2 {
     }
 
     @PostMapping
-    public ResponseEntity createBeerEntry(@RequestBody BeerDtoV2 beerDtoV2){
+    public ResponseEntity createBeerEntry(@Valid @RequestBody BeerDtoV2 beerDtoV2){
         BeerDtoV2 savedBeerDtoV2 = beerServiceV2.createNewBeer(beerDtoV2);
         HttpHeaders httpHeader = new HttpHeaders();
         //TODO: add hostname to url
@@ -32,7 +33,7 @@ public class BeerControllerV2 {
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity handleUpdate(@PathVariable("beerId") UUID beerId, @RequestBody BeerDtoV2 beerDtoV2){
+    public ResponseEntity handleUpdate(@PathVariable("beerId") UUID beerId, @Valid @RequestBody BeerDtoV2 beerDtoV2){
         beerServiceV2.updateBeer(beerId, beerDtoV2);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -42,4 +43,7 @@ public class BeerControllerV2 {
     public void deleteBeerById(@PathVariable("beerId") UUID beerId){
         beerServiceV2.deleteBeerById(beerId);
     }
+
+
+
 }

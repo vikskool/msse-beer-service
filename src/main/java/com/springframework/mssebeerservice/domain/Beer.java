@@ -3,6 +3,7 @@ package com.springframework.mssebeerservice.domain;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -29,7 +30,7 @@ public class Beer {
     @Column(updatable = false)
     private Timestamp cretaedDate;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     private Timestamp lastModifiedDate;
 
     private String beerName;
@@ -39,7 +40,8 @@ public class Beer {
     private Long upc;
 
     private BigDecimal price;
-    private Integer minOrdered;
+
+    private Integer minOnHand;
     private Integer quantityToBrew;
 
 }

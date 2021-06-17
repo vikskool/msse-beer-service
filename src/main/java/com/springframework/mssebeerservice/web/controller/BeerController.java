@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @Slf4j
@@ -28,7 +29,7 @@ public class BeerController {
     }
 
     @PostMapping
-    public ResponseEntity createBeerEntry(@RequestBody BeerDto beerDto){
+    public ResponseEntity createBeerEntry(@Valid @RequestBody BeerDto beerDto){
         BeerDto savedBeerDto = beerService.createNewBeer(beerDto);
         HttpHeaders httpHeader = new HttpHeaders();
         //TODO: add hostname to url
@@ -37,7 +38,7 @@ public class BeerController {
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity handleUpdate(@PathVariable("beerId") UUID beerId, @RequestBody BeerDto beerDto){
+    public ResponseEntity handleUpdate(@PathVariable("beerId") UUID beerId, @Valid @RequestBody BeerDto beerDto){
         beerService.updateBeer(beerId, beerDto);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -46,6 +47,13 @@ public class BeerController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBeerById(@PathVariable("beerId") UUID beerId){
         beerService.deleteBeerById(beerId);
+    }
+
+    @GetMapping("/upc/{upcId}")
+    public ResponseEntity<BeerDto> getBeerByUpc(@PathVariable("upcId") Long upc){
+        BeerDto beerDto = beerService.getBeerByUpc(upc);
+
+        return new ResponseEntity<>(beerDto, HttpStatus.OK);
     }
 
 

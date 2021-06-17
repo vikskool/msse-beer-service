@@ -6,12 +6,15 @@ import com.springframework.mssebeerservice.web.model.CustomerDto;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/customer")
+@Validated
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -28,7 +31,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity createCustomer(@RequestBody CustomerDto customerDto){
+    public ResponseEntity createCustomer(@Valid @RequestBody CustomerDto customerDto){
         CustomerDto createdCustomer = customerService.createCustomer(customerDto);
 
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -40,7 +43,7 @@ public class CustomerController {
 
     @PutMapping("/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCustomer(@PathVariable("customerId") UUID customerId, @RequestBody CustomerDto customerDto){
+    public void updateCustomer(@PathVariable("customerId") UUID customerId, @Valid @RequestBody CustomerDto customerDto){
         customerService.updateCustomer(customerId, customerDto);
     }
 
